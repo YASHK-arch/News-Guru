@@ -11,7 +11,7 @@ export default function NewsItem({ article, isRead, onMarkRead }) {
     <div className={`news-card ${isRead ? 'read' : ''}`}>
       <div className="news-image-container">
         <img 
-          src={article.urlToImage || fallbackImage} 
+          src={article.image || fallbackImage} 
           alt={article.title} 
           className="news-image"
           onError={(e) => { e.target.src = fallbackImage }}

@@ -34,7 +34,7 @@ export default function ReadNewsModal({ readArticles, onClose }) {
                 <div key={article.url || index} className="read-item-card">
                   <div className="read-item-image">
                     <img 
-                      src={article.urlToImage || fallbackImage} 
+                      src={article.image || fallbackImage} 
                       alt=""
                       onError={(e) => { e.target.src = fallbackImage }}
                     />
