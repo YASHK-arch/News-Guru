@@ -71,7 +71,8 @@ function App() {
       try {
         // GNews uses structured topic categories
         const gnewsCategory = category === 'general' ? 'world' : category;
-        const response = await fetch(`https://corsproxy.io/?https://gnews.io/api/v4/top-headlines?category=${gnewsCategory}&lang=en&country=in&apikey=${API_KEY}`);
+        const targetUrl = `https://gnews.io/api/v4/top-headlines?category=${gnewsCategory}&lang=en&country=in&apikey=${API_KEY}`;
+        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`);
 
         if (!response.ok) {
           if (response.status === 401 || response.status === 403) {
