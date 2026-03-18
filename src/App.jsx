@@ -31,7 +31,8 @@ const MOCK_DATA = [
   }
 ];
 
-const API_KEY = '153645dbd2e1826abb3a031a4767209c'; // Replace with your actual GNews API key
+// The API key is now securely stored in our backend!
+// const API_KEY = 'MOVED_TO_BACKEND'; 
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -73,15 +74,14 @@ function App() {
         const gnewsCategory = category === 'general' ? 'world' : category;
         console.log("Fetching category:", gnewsCategory); // Debug Tip from GPT
 
-        const targetUrl = `https://gnews.io/api/v4/top-headlines?category=${gnewsCategory}&lang=en&country=in&apikey=${API_KEY}`;
-
-        // Using corsproxy.io as a better proxy alternative to allorigins.win
-        const proxyUrl = `https://corsproxy.io/?${targetUrl}`;
-        const response = await fetch(proxyUrl);
+        // Use the deployed backend URL from Render here, or localhost for local testing
+        // Change this URL once you deploy to Render! e.g. 'https://your-backend.onrender.com'
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        const response = await fetch(`${backendUrl}/news?category=${gnewsCategory}`);
 
         if (!response.ok) {
-          if (response.status === 401 || response.status === 403) {
-            throw new Error("Invalid or missing API Key. Please update the API_KEY variable in App.jsx with a GNews API Key.");
+          if (response.status === 401 || response.status === 403 || response.status === 429) {
+            throw new Error("API Key issue on backend, or rate limits reached. Check server logs.");
           }
           throw new Error("Failed to fetch news.");
         }
