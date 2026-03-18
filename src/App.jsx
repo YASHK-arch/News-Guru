@@ -72,9 +72,9 @@ function App() {
         // GNews uses structured topic categories
         const gnewsCategory = category === 'general' ? 'world' : category;
         console.log("Fetching category:", gnewsCategory); // Debug Tip from GPT
-        
+
         const targetUrl = `https://gnews.io/api/v4/top-headlines?category=${gnewsCategory}&lang=en&country=in&apikey=${API_KEY}`;
-        
+
         // Using corsproxy.io as a better proxy alternative to allorigins.win
         const proxyUrl = `https://corsproxy.io/?${targetUrl}`;
         const response = await fetch(proxyUrl);
