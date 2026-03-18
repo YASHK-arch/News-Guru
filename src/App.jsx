@@ -71,8 +71,13 @@ function App() {
       try {
         // GNews uses structured topic categories
         const gnewsCategory = category === 'general' ? 'world' : category;
+        console.log("Fetching category:", gnewsCategory); // Debug Tip from GPT
+        
         const targetUrl = `https://gnews.io/api/v4/top-headlines?category=${gnewsCategory}&lang=en&country=in&apikey=${API_KEY}`;
-        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`);
+        
+        // Using corsproxy.io as a better proxy alternative to allorigins.win
+        const proxyUrl = `https://corsproxy.io/?${targetUrl}`;
+        const response = await fetch(proxyUrl);
 
         if (!response.ok) {
           if (response.status === 401 || response.status === 403) {
@@ -93,7 +98,7 @@ function App() {
         setError(err.message);
         setArticles(MOCK_DATA);
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensures loading spinner is always removed
       }
     };
 
